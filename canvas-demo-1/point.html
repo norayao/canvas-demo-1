@@ -1,0 +1,40 @@
+<!-- 画小圆点 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas-demo-1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- create the painter -->
+<div class="canvas" id="canvas"></div>
+<script>
+    canvas.onclick = (e) => {
+        // console.log get click position
+        console.log(e.clientX);
+        console.log(e.clientY);
+        // show a square on click position
+        let div = document.createElement('div');
+        div.style.position = 'absolute';
+        // set square position as clientX & clientY
+        div.style.left = e.clientX + 'px';
+        div.style.top = e.clientY + 'px';
+        // set square size
+        div.style.width = '6px';
+        div.style.height = '6px';
+        // let the square on top-left corner of cursor
+        // as half of square width and height
+        div.style.marginLeft = '-3px';
+        div.style.marginTop = '-3px';
+        // circle
+        div.style.borderRadius = '50%';
+        // solid
+        div.style.backgroundColor = 'black';
+        // add into canvas
+        canvas.appendChild(div);
+
+    }
+</script>
+</body>
+</html>
