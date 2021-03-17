@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- create the painter -->
+<!-- use div to create the painter
 <div class="canvas" id="canvas"></div>
 <script>
     canvas.onclick = (e) => {
@@ -36,5 +36,25 @@
 
     }
 </script>
+-->
+
+<!-- use canvas to create a painter -->
+<canvas id="canvas"></canvas>
+<script>
+    let canvas = document.getElementById('canvas');
+    // set canvas size equals to screen size
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+
+    let context = canvas.getContext('2d');
+     context.fillStyle = "blue";
+     // point: onclick, line: onmousemove
+     canvas.onclick = (e) => {
+         console.log(e.clientX);
+         console.log(e.clientY);
+         context.fillRect(e.clientX-5, e.clientY-5, 10, 10);
+     }
+</script>
+
 </body>
 </html>
