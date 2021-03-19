@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Line Painter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+    // get canvas element
+    let canvas = document.getElementById('canvas');
+    // set width and height = client window size
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+
+    // set canvas context: 2D
+    let ctx = canvas.getContext('2d');
+
+    // line color
+    ctx.strokeStyle = 'blue';
+    // line width
+    ctx.lineWidth = 10;
+    // rounded turning point
+    ctx.lineCap = 'round';
+
+    function draw(x1, y1, x2, y2){
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    // check device, support touch screen or not
+    let isTouchDevice = 'ontouchstart' in document.documentElement;
+    console.log(isTouchDevice);
+    // device with touch screen
+    if (isTouchDevice){
+        canvas.ontouchmove = (e) => {
+            // start point position
+            let x = e.touches[0].clientX;
+            let y = e.touches[0].clientY;
+
+            // Differ to mouse action, touch screen does not
+            // have start and end point. Therefore we can track
+            // user's touching action, let canvas fill the whole
+            // moving path
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2*Math.PI);
+            ctx.stroke();
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+        }
+    }
+    // device without touch -> mouse action
+    else{
+        let painting = false;
+        let start_point = [];
+        // action start
+        canvas.onmousedown = (e) =>{
+            painting = true;
+            // set an array to save start point
+            start_point = [e.clientX, e.clientY];
+            console.log(start_point);
+        }
+        // start to move
+        canvas.onmousemove = (e) => {
+            if (painting === true){
+                console.log(start_point);
+                draw(start_point[0], start_point[1], e.clientX, e.clientY);
+                // update start point
+                start_point = [e.clientX, e.clientY];
+            }
+        }
+        // once user stop pressing their mouse
+        canvas.onmouseup = () => {
+            painting = false;
+        }
+    }
+</script>
+</body>
+</html>

@@ -48,12 +48,34 @@
 
     let context = canvas.getContext('2d');
      context.fillStyle = "blue";
-     // point: onclick, line: onmousemove
-     canvas.onclick = (e) => {
-         console.log(e.clientX);
-         console.log(e.clientY);
-         context.fillRect(e.clientX-5, e.clientY-5, 10, 10);
-     }
+     // point: onclick
+
+    //  canvas.onclick = (e) => {
+    //     console.log(e.clientX);
+    //     console.log(e.clientY);
+    //     context.fillRect(e.clientX-5, e.clientY-5, 10, 10);
+    // }
+
+    
+    // action initial variable
+    let painting = false;
+    // once user is pressing their mouse
+    canvas.onmousedown = () => {
+        painting = true;
+    }
+    //line: onmousemove
+    canvas.onmousemove = (e) => {
+        if (painting === true){
+            context.fillRect(e.clientX-5, e.clientY-5,10,10);
+        }
+        else{
+            console.log('waiting');
+        }
+    }
+    // once user stop pressing their mouse
+    canvas.onmouseup = () => {
+        painting = false;
+    }
 </script>
 
 </body>
